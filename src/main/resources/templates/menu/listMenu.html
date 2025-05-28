@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/assets/css/base.css}">
+</head>
+<body>
+<section class="sections" layout:fragment="content">
+    <nav class="navbar navbar-light bg-light">
+        <a th:href="@{create-menu}" class="btn btn-success">
+            <i class="bi bi-plus-square"></i>
+            <span>Crear nuevo</span>
+        </a>
+        <div class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Buscar platillo ..." aria-label="Search">
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Listado de menú</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+            <div class="col" th:each="menu : ${menus}">
+                <div class="card card-hover h-100">
+                    <div
+                            class="card-header text-white"
+                            th:text="${menu.name}"
+                            th:classappend="${menu.isActive} ? 'bg-primary' : 'bg-dark'"
+                    >
+                    </div>
+                    <ul class="list-group" th:each="recipe : ${menu.recipes}">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span th:text="${recipe.name}"></span>
+                            <span class="badge bg-primary rounded-pill" th:text="'$'+${recipe.price}"></span>
+                        </li>
+                    </ul>
+                    <div class="card-footer text-white d-flex justify-content-between">
+                        <th:block th:if="${!menu.isActive}">
+                            <button class="btn btn-primary">Activar</button>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

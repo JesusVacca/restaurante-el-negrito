@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/assets/css/base.css}">
+</head>
+<body>
+<section class="sections" layout:fragment="content">
+  <h3>Listado de platillos</h3>
+  <nav class="navbar navbar-light bg-light">
+    <a th:href="@{create-recipe}" class="btn btn-success">
+      <i class="bi bi-plus-square"></i>
+      <span>Crear nuevo</span>
+    </a>
+    <div class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Buscar platillo ..." aria-label="Search">
+    </div>
+  </nav>
+  <div class="table-responsive">
+    <table class="table table-hover text-center align-middle">
+      <thead class="table-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Creado</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+      </tr>
+      </thead>
+        <tr th:each="recipe : ${recipes}">
+          <td th:text="${recipe.name}"></td>
+          <td th:text="${recipe.creationDate}"></td>
+          <td>
+            <th:block th:switch="${recipe.isActive}">
+                <span th:case="true" class="badge bg-success">Disponible</span>
+                <span th:case="false" class="badge bg-danger">No disponible</span>
+            </th:block>
+          </td>
+          <td>
+            <button type="button" class="btn btn-sm btn-primary">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-sm btn-danger">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</body>
+</html>

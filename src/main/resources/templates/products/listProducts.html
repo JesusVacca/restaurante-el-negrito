@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/assets/css/base.css}">
+</head>
+<body>
+<section class="sections" layout:fragment="content">
+    <h3>Listado de productos</h3>
+    <nav class="navbar navbar-light bg-light">
+        <a th:href="@{create-product}" class="btn btn-success">
+            <i class="bi bi-plus-square"></i>
+            <span>Crear nuevo</span>
+        </a>
+        <div class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Buscar producto ..." aria-label="Search">
+        </div>
+    </nav>
+    <div class="table-responsive">
+        <table class="table table-hover text-center align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Vista</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Medida</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Creado</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="product : ${products}">
+                <tr th:data-id="${product.id}">
+                    <td>
+                        <img th:src="${product.imageUrl}" th:alt="${product.name}" class="img-fluid rounded" style="width: 90px; height: 90px; object-fit: cover;">
+                    </td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.quantity}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.unitOfMeasure}"></td>
+                    <td th:text="${product.category}"></td>
+                    <td th:text="${product.creationDate}"></td>
+                    <td>
+                        <th:block th:switch="${product.status}">
+                            <span th:case="${T(com.prototype.restaurante_el_negro.enums.ProductStatus).AVAILABLE}" class="badge bg-success">Disponible</span>
+                            <span th:case="${T(com.prototype.restaurante_el_negro.enums.ProductStatus).UNAVAILABLE}" class="badge bg-warning text-dark">Agotado</span>
+                            <span th:case="${T(com.prototype.restaurante_el_negro.enums.ProductStatus).DELETED}" class="badge bg-danger">Eliminado</span>
+                            <span th:case="*" class="badge bg-warning text-dark">Agotado</span>
+                        </th:block>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" th:href="@{''(page=${currentPage - 1})}"  aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" th:href="@{?page=1}">1</a></li>
+            <li class="page-item"><a class="page-link" th:href="@{?page=2}">2</a></li>
+            <li class="page-item">
+                <a class="page-link" th:href="@{''(page=${currentPage + 1})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</section>
+
+</body>
+</html>

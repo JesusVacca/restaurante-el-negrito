@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Sección de mesas</title>
+</head>
+<body>
+<section class="sections" layout:fragment="content">
+    <div id="error-alert"></div>
+    <h3>Crear mesa</h3>
+    <nav class="navbar navbar-light bg-light">
+        <a th:href="@{/dashboard/table/}" class="btn btn-success button-section">
+            <i class="bi bi-arrow-left"></i>
+            <span>Volver atras</span>
+        </a>
+    </nav>
+    <div class="container d-flex justify-content-center">
+        <form class="w-100 p-4" style="max-width: 90%;" id="create-order" action="/dashboard/table/create-table" method="POST">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="name" class="form-label">Nombre de la mesa</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="status" class="form-label">Menú del día</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="true" selected>Disponible</option>
+                        <option value="false">No disponible</option>
+                    </select>
+                </div>
+
+                <div class="col-12 d-grid">
+                    <button type="submit" class="btn btn-success">Crear mesa</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Crear platillo</title>
+</head>
+<body>
+<section class="sections" layout:fragment="content">
+  <div id="error-alert"></div>
+  <h3>Crear platillo</h3>
+  <nav class="navbar navbar-light bg-light">
+    <a class="btn btn-success button-section">
+      <i class="bi bi-arrow-left"></i>
+      <span>Volver atras</span>
+    </a>
+  </nav>
+  <div class="container d-flex justify-content-center">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Productos</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group">
+              <label class="list-group-item" th:each="product : ${products}">
+                <input
+                        class="form-check-input me-1"
+                        type="checkbox" value=""
+                        th:data-stock="${product.quantity}"
+                        th:data-name="${product.name}"
+                        onclick="addProductToTable(this)"
+                        th:id="${product.id}"
+                >
+                <span th:text="${product.name}" th:title="'Cantidad disponible '+${product.quantity}"></span>
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="w-100 p-4" id="form-create-recipe">
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label for="name" class="form-label">Nombre del platillo</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="col-md-12 mb-3">
+          <label for="price" class="form-label">Precio del platillo</label>
+          <input type="number" class="form-control" id="price" name="price" required>
+        </div>
+        <div class="col-md-12 mb-3">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Agregar producto al platillo
+          </button>
+        </div>
+        <div class="col-md-12 mb-3">
+          <h5>Productos Personalizados</h5>
+          <table class="table table-bordered" id="tablaProductos">
+            <thead>
+            <tr>
+              <th>Nombre del Producto</th>
+              <th>Cantidad</th>
+              <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody id="tbodyProducts">
+            </tbody>
+          </table>
+        </div>
+        <div class="col-12 d-grid">
+          <button type="submit" class="btn btn-success">Crear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<th:block layout:fragment="script">
+  <script th:src="@{/assets/script/recipes.js}"></script>
+</th:block>
+</body>
+</html>

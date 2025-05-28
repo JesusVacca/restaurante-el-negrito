@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Sección de pedido</title>
+</head>
+<body>
+<section class="sections" layout:fragment="content">
+  <div id="error-alert"></div>
+  <h3>Crear pedido</h3>
+  <nav class="navbar navbar-light bg-light">
+    <a th:href="@{/dashboard/orders/}" class="btn btn-success button-section">
+      <i class="bi bi-arrow-left"></i>
+      <span>Volver atras</span>
+    </a>
+  </nav>
+  <div class="container d-flex justify-content-center">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Platillos</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group" th:each="menu : ${menus}">
+              <label class="list-group-item" th:each="recipe : ${menu.recipes}">
+                <input
+                        class="form-check-input me-1"
+                        type="checkbox"
+                        th:data-name="${recipe.name}"
+                        th:id="${recipe.recipeId}"
+                        th:data-price="${recipe.price}"
+                        onclick="addOrderToTable(this)"
+                >
+                <span th:text="${recipe.name}"></span>
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="w-100 p-4" style="max-width: 90%;" id="create-order">
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label for="menu_id" class="form-label">Menú del día</label>
+          <select class="form-select" id="menu_id" name="menu_id">
+            <option th:each="menu : ${menus}"
+                    th:value="${menu.menuId}"
+                    th:text="${menu.name}">
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-12 mb-3">
+          <th:block th:if="${tables.size() <= 0}">
+            <p class="badge bg-warning text-dark">No hay mesas disponibles</p>
+          </th:block>
+          <th:block th:if="${tables.size() > 0}">
+            <label for="mesa_id" class="form-label">Mesas disponibles</label>
+            <select class="form-select" id="mesa_id" name="mesa_id" required>
+              <option th:each="table : ${tables}"
+                      th:value="${table.id}"
+                      th:text="${table.name}">
+              </option>
+            </select>
+          </th:block>
+        </div>
+
+        <div class="col-md-12 mb-3">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Seleccionar platillos
+          </button>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Nombre del platillo</th>
+            <th>Precio platillo</th>
+            <th>Cantidad</th>
+            <th>Acción</th>
+          </tr>
+          </thead>
+          <tbody id="tbodyOrder">
+          </tbody>
+        </table>
+
+        <div class="col-12 d-grid">
+          <button type="submit" class="btn btn-success">Guardar pedido</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<th:block layout:fragment="script">
+  <script th:src="@{/assets/script/order.js}"></script>
+</th:block>
+</body>
+</html>

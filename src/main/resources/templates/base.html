@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <style>
+        :root {
+            --almond: #e7d8c9ff;
+            --carolina-blue: #89aac3ff;
+            --oxford-blue: #0f1939ff;
+            --white-smoke: #f4f4f4ff;
+            --dun: #c8b6a6ff;
+            --padding: 1em;
+            --border-radius: .5em;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to right, var(--carolina-blue), var(--almond));
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: var(--white-smoke);
+            padding: 2em;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--oxford-blue);
+            margin-bottom: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 1.2em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: var(--oxford-blue);
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.75em;
+            border: 1px solid var(--dun);
+            border-radius: var(--border-radius);
+            background-color: #fff;
+            font-size: 1em;
+            color: var(--oxford-blue);
+        }
+
+        input:focus {
+            border-color: var(--carolina-blue);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8em;
+            background-color: var(--oxford-blue);
+            color: var(--white-smoke);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--carolina-blue);
+            color: var(--oxford-blue);
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form th:action="@{/auth/login/}" method="post">
+        <div th:if="${error}" class="error-message" th:text="${error}">Usuario o contraseña incorrectos</div>
+        <div class="form-group">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" name="username" placeholder="Tu nombre de usuario" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
+        </div>
+
+        <button type="submit">Entrar</button>
+    </form>
+</div>
+</body>
+</html>
