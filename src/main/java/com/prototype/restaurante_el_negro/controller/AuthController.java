@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/auth/login/")
+@RequestMapping("/")
 public class AuthController {
     private final AuthServices authServices;
 

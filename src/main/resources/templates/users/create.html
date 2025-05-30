@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de crear usuario</title>
+</head>
+<body>
+<section class="sections" layout:fragment="content">
+    <div id="error-alert"></div>
+    <h3>Crear Usuario</h3>
+    <nav class="navbar navbar-light bg-light">
+        <a href="/dashboard/users" class="btn btn-success button-section">
+            <i class="bi bi-arrow-left"></i>
+            <span>Volver atrás</span>
+        </a>
+    </nav>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Roles disponibles</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <label class="list-group-item" th:each="rol : ${roles}">
+                            <input
+                                    class="form-check-input me-1"
+                                    type="checkbox"
+                                    th:data-name="${rol.name}"
+                                    th:id="${rol.name}"
+                                    onclick="addElementToTable(this)"
+                            >
+                            <span th:text="${rol.name}"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container d-flex justify-content-center">
+        <form class="w-100 p-4" style="max-width: 90%;" id="create-member">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="name" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="phone" class="form-label">Número de telefono</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label for="address" class="form-label">Dirección de recidencia</label>
+                    <input type="text" class="form-control" id="address" name="address" required>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Seleccionar roles
+                    </button>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <h5>Roles seleccionados</h5>
+                    <table class="table table-bordered" id="tablaRoles">
+                        <thead>
+                        <tr>
+                            <th>Rol</th>
+                            <th>Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodyRoles">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 d-grid">
+                    <button type="submit" class="btn btn-success">Guardar usuario</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<th:block layout:fragment="script">
+    <script th:src="@{/assets/script/users.js}"></script>
+</th:block>
+</body>
+</html>
